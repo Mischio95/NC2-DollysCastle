@@ -69,8 +69,6 @@ class MenuScene: SKScene
                 self.view?.presentScene(historyScene, transition: transitionHistory)
                 
             }
-            
-           
         }
     }
 }

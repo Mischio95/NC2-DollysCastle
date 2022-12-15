@@ -39,6 +39,10 @@ import Foundation
 class GameScene: SKScene
 {
     
+    var pipistrello: SKSpriteNode!
+    
+    var backgroundScene: SKSpriteNode!
+    
     let directionPlayerSwipe = SKSpriteNode()
     
     let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
@@ -46,6 +50,7 @@ class GameScene: SKScene
     var vectorLight: [SKSpriteNode] = []
     
     var invincible = false
+    
     //Various Animation
 
     let explosionBloodSprite = SKSpriteNode()
@@ -327,6 +332,8 @@ class GameScene: SKScene
     override func didMove(to view: SKView)
     {
         
+        backgroundScene = self.childNode(withName: "ciccio") as? SKSpriteNode
+//        backgroundScene.name = "ciccio"
         
         CreateMap()
         CreatePlayer()
@@ -381,8 +388,17 @@ class GameScene: SKScene
         
         // Blood
         addChild(explosionBloodSprite)
-        CreateInput()
-      
+        
+        // INPUT CON I BOTTONI
+        //CreateInput()
+        
+        // SWIPE CHE SCORRE TIPO PACMAN FIN QUANDO NON TROVA OSTACOLO
+        //addSwipeGesture()
+        
+        // FRANCI E SANTO MOVMENT
+        
+        createPipistrelloButton()
+        addSantoFranciSwipeButton()
   
         self.view?.isMultipleTouchEnabled = false
       
@@ -442,6 +458,9 @@ class GameScene: SKScene
 
         touchRight?.position.x = cam.position.x + 30
         touchRight?.position.y = cam.position.y - 124
+        
+        pipistrello?.position.x = cam.position.x
+        pipistrello?.position.y = cam.position.y - 130
     }
 }
 
@@ -450,7 +469,7 @@ extension GameScene
 {
     func CreateMap()
     {
-        ResetArray()
+       // ResetArray()
        
         var x: CGFloat = self.size.width/2 + self.size.width/CGFloat(arrayPoint[0].count)/2
         //var y: CGFloat = self.size.width/2 - self.size.width/CGFloat(arrayPoint[0].count)/2
@@ -540,7 +559,7 @@ extension GameScene
         if(touched)
         {
             let next = nodes(at: CGPoint(x: player.position.x + x, y: player.position.y + y)).last
-            if(next?.name == "0" || next?.name == "2")
+            if(next?.name == "0" || next?.name == "2" || next?.name == "ciccio")
             {
                 if(next?.name == "2")
                 {
@@ -680,25 +699,187 @@ extension GameScene
             newDirection = "right"
             MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
+        
+// ----------------------------------------------------- PIPISTRELLO BUTTON -------------------------------
+        
+        else if(atPoint(location).name == "pipistrello" && newDirection == "up")
+        {
+            selectionFeedbackGenerator.selectionChanged()
+            touched = true
+            newDirection = "up"
+            pipistrello?.alpha = 1
+            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
+        }
+        
+        else if(atPoint(location).name == "pipistrello" && newDirection == "down")
+        {
+            selectionFeedbackGenerator.selectionChanged()
+            touched = true
+            newDirection = "down"
+            pipistrello?.alpha = 1
+            MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
+        }
+        
+        else if(atPoint(location).name == "pipistrello" && newDirection == "right")
+        {
+            selectionFeedbackGenerator.selectionChanged()
+            touched = true
+            newDirection = "right"
+            pipistrello?.alpha = 1
+            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+        }
+        
+        else if(atPoint(location).name == "pipistrello" && newDirection == "left")
+        {
+            selectionFeedbackGenerator.selectionChanged()
+            touched = true
+            newDirection = "left"
+            pipistrello?.alpha = 1
+            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+        }
     }
 
-override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
-{
-    for child in children
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
-        if(child.name == "left" || child.name == "up" || child.name == "down" || child.name == "right")
+        for child in children
         {
             if(child.name == "left" || child.name == "up" || child.name == "down" || child.name == "right")
             {
-                child.alpha = 0.8
+                if(child.name == "left" || child.name == "up" || child.name == "down" || child.name == "right")
+                {
+                    child.alpha = 0.8
+                }
             }
         }
+        touched = false
+        pipistrello?.alpha = 0.8
+        StartIdleAnimation()
+            
     }
-    touched = false
-   
-    StartIdleAnimation()
+
+// ------------------------------------------- SWIPE TYPE PACMAN  -------------------------------------------------------------
         
+    func addSwipeGesture()
+        {
+            let swipeRight : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedRight))
+
+                swipeRight.direction = .right
+
+                view?.addGestureRecognizer(swipeRight)
+
+            let swipeDown : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedDown))
+
+                swipeDown.direction = .down
+
+                view?.addGestureRecognizer(swipeDown)
+
+            let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedUp))
+
+                swipeUp.direction = .up
+
+                view?.addGestureRecognizer(swipeUp)
+
+            let swipeLeft : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedLeft))
+
+                swipeLeft.direction = .left
+
+                view?.addGestureRecognizer(swipeLeft)
+        }
+
+        @objc func swipedRight(sender: UISwipeGestureRecognizer) {
+
+            touched = true
+            newDirection = "right"
+            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+          }
+
+        @objc func swipedUp(sender: UISwipeGestureRecognizer) {
+
+            touched = true
+            newDirection = "up"
+            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
+            StartIdleAnimation()
+          }
+
+        @objc func swipedDown(sender: UISwipeGestureRecognizer) {
+
+            touched = true
+            newDirection = "down"
+            
+            MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
+            StartIdleAnimation()
+          }
+
+        @objc func swipedLeft(sender: UISwipeGestureRecognizer) {
+
+            touched = true
+            newDirection = "left"
+            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+          }
+    
+    
+// ------------------------------------------- SANTO E FRANCI INPUT -------------------------------------------------------------
+    
+    func addSantoFranciSwipeButton()
+    {
+        let swipeRight : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedRightSantoFranci))
+
+            swipeRight.direction = .right
+
+            view?.addGestureRecognizer(swipeRight)
+
+        let swipeDown : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedDownSantoFranci))
+
+            swipeDown.direction = .down
+
+            view?.addGestureRecognizer(swipeDown)
+
+        let swipeUp : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedUpSantoFranci))
+
+            swipeUp.direction = .up
+
+            view?.addGestureRecognizer(swipeUp)
+
+        let swipeLeft : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedLeftSantoFranci))
+
+            swipeLeft.direction = .left
+
+            view?.addGestureRecognizer(swipeLeft)
     }
+    
+    @objc func swipedRightSantoFranci(sender: UISwipeGestureRecognizer) {
+        
+        newDirection = "right"
+        //pipistrello.zRotation = -1.5708
+        touched = false
+        StartIdleAnimation()
+      }
+
+    @objc func swipedUpSantoFranci(sender: UISwipeGestureRecognizer) {
+
+        newDirection = "up"
+        //pipistrello.zRotation = 0
+        touched = false
+        StartIdleAnimation()
+      }
+
+    @objc func swipedDownSantoFranci(sender: UISwipeGestureRecognizer) {
+
+        newDirection = "down"
+        //pipistrello.zRotation = -3.14159
+        touched = false
+        StartIdleAnimation()
+        
+      }
+
+    @objc func swipedLeftSantoFranci(sender: UISwipeGestureRecognizer) {
+
+        newDirection = "left"
+        //pipistrello.zRotation = 1.5708
+        touched  = false
+        StartIdleAnimation()
+        
+      }
 }
 
 //MARK: Timer
@@ -749,7 +930,6 @@ extension GameScene
     func ReduceWalkingCell()
     {
         var spawnOnPlayer = true
-        let light = SKSpriteNode(imageNamed: "casellailluminata1")
         
         //Debug
         if(arrayTexture.isEmpty)
@@ -759,8 +939,8 @@ extension GameScene
         else
         {
             var randomInt = Int.random(in: 0...arrayTexture.count-1)
-            var tempSprite = arrayTexture[randomInt]
-            tempSprite.name = "2"
+            
+            
             //light.position = tempSprite.position
         
             while(spawnOnPlayer)
@@ -776,12 +956,8 @@ extension GameScene
             }
             arrayTexture[randomInt].name = "2"
             arrayTexture[randomInt].texture = SKTexture(imageNamed: "BrickLightOn")
-            arrayTexture[randomInt].size = CGSize(width: 20, height: 20)
-            let lightBlinking = SKAction.animate(with: turnOnLight , timePerFrame: 0.3)
-            light.run(SKAction.repeatForever(lightBlinking))
-            light.size = CGSize(width: 15, height: 15)
-            vectorLight.append(tempSprite)
-            tempSprite.addChild(light)
+            arrayTexture[randomInt].size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                                  height: self.size.width/CGFloat(arrayPoint[0].count))
             arrayTexture.remove(at: randomInt)
         }
     }
@@ -838,6 +1014,16 @@ extension GameScene
         addChild(touchRight!)
     }
     
+    func createPipistrelloButton()
+    {
+        pipistrello = SKSpriteNode(imageNamed: "pipistrello")
+        pipistrello?.size = CGSize(width: 80, height: 80)
+        pipistrello?.name = "pipistrello"
+        pipistrello?.alpha = 0.7
+        pipistrello?.zPosition = 100
+        addChild(pipistrello!)
+    }
+    
     
     
     func ResetArray()
@@ -868,30 +1054,18 @@ extension GameScene
         time = 10
         cellToOccupy += currentRound * 2
         ResetAllPosition()
-        ResetLight()
     }
     
-    
-    func ResetLight()
-    {
-        for index in 1...vectorLight.count - 2
-        {
-            print(vectorLight.count)
-            
-            vectorLight[index].removeFromParent()
-
-        }
-    }
 
     func ResetAllPosition()
     {
         for i in 0...totalArrayTexture.count-1
         {
-            var newBrick: SKSpriteNode!
-            newBrick = totalArrayTexture[i]
-            newBrick.texture = SKTexture(imageNamed: "DarkBrick")
-            newBrick.name = "0"
-            arrayTexture.append(newBrick)
+            totalArrayTexture[i].texture = SKTexture(imageNamed: "DarkBrick")
+            totalArrayTexture[i].name = "0"
+            totalArrayTexture[i].size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                               height: self.size.width/CGFloat(arrayPoint[0].count))
+            arrayTexture.append(totalArrayTexture[i])
         }
     }
     
