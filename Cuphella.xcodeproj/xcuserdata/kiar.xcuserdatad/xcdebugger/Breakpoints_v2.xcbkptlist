@@ -53,8 +53,8 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "GameScene"
             landmarkType = "3">
          </BreakpointContent>
@@ -69,8 +69,8 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "GameScene"
             landmarkType = "3">
          </BreakpointContent>
@@ -85,9 +85,9 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "740"
-            endingLineNumber = "740"
-            landmarkName = "ReduceWalkingCell()"
+            startingLineNumber = "742"
+            endingLineNumber = "742"
+            landmarkName = "touchesBegan(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -101,8 +101,8 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "GameScene"
             landmarkType = "3">
          </BreakpointContent>
@@ -117,8 +117,8 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "GameScene"
             landmarkType = "3">
          </BreakpointContent>
@@ -133,9 +133,9 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "771"
-            endingLineNumber = "771"
-            landmarkName = "NewGame()"
+            startingLineNumber = "773"
+            endingLineNumber = "773"
+            landmarkName = "touchesEnded(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -149,10 +149,10 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "arrayPoint"
-            landmarkType = "24">
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "GameScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
