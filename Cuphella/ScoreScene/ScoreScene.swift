@@ -16,10 +16,15 @@ class ScoreScene: SKScene
     var scoreLabel2: SKLabelNode!
     var scoreLabel3: SKLabelNode!
     var scoreLabel4: SKLabelNode!
-
+    
+    var mainMenuButton: SKSpriteNode!
+    var newGameButton: SKSpriteNode!
     
     override func didMove (to view: SKView) -> Void
     {
+        
+        mainMenuButton = self.childNode(withName: "returnToMewnu") as? SKSpriteNode
+        newGameButton = self.childNode(withName: "newGameButton") as? SKSpriteNode
         
         if !scores.isEmpty
         {
@@ -62,12 +67,14 @@ class ScoreScene: SKScene
                 let nodesArray = self.nodes(at: location)
                 if (nodesArray.first?.name == "newGameButton")
                 {
+                    self.newGameButton.alpha = 0.3
                     let transition = SKTransition.fade(with: .black, duration: 0.5)
                     let gameScene = GameScene(size:self.size)
                     self.view?.presentScene(gameScene, transition: transition)
                 }
                 else if(nodesArray.first?.name == "returnToMenu")
                 {
+                    self.mainMenuButton.alpha = 0.3
                     let transition = SKTransition.fade(with: .black, duration: 0.5)
                     let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
                     self.view?.presentScene(returnToMenuScene, transition: transition)

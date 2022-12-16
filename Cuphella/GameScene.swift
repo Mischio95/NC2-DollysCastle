@@ -20,7 +20,7 @@ import Foundation
 // AGGIUSTARE ASSSOLUTAMENTE LE FRECC
 
 
-//DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { METTI QUA DENTRO QUELLO CHE DEVE ESSERE DELAYATIO }
+//DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { METTI QUA DENTRO QUELLO CHE DEVE ESSERE DELAYATIO }DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { METTI QUA DENTRO QUELLO CHE DEVE ESSERE DELAYATIO }
 
 /*
  MAPPA:
@@ -253,6 +253,24 @@ class GameScene: SKScene
         return SKTextureAtlas(named: "DollyMoveRight")
     }
     
+    
+    private var pipistrelloAtlas: SKTextureAtlas
+    {
+        return SKTextureAtlas(named: "PipistrelloAnimation")
+    }
+    
+    private var pipistrelloMove: [SKTexture]
+    {
+        return[
+         pipistrelloAtlas.textureNamed("batbat1"),
+         pipistrelloAtlas.textureNamed("batbat2"),
+         pipistrelloAtlas.textureNamed("batbat3"),
+         pipistrelloAtlas.textureNamed("batbat4"),
+         pipistrelloAtlas.textureNamed("batbat5"),
+         pipistrelloAtlas.textureNamed("batbat6"),
+         pipistrelloAtlas.textureNamed("batbat7")]
+        
+    }
     private var dollyMoveDown: [SKTexture]
     {
     
@@ -332,12 +350,15 @@ class GameScene: SKScene
     override func didMove(to view: SKView)
     {
         
-        backgroundScene = self.childNode(withName: "ciccio") as? SKSpriteNode
-//        backgroundScene.name = "ciccio"
+//        backgroundScene = self.childNode(withName: "forest") as? SKSpriteNode
+//        backgroundScene.name = "forest"
         
         CreateMap()
         CreatePlayer()
         CreateHeart()
+        
+        // choosInput = 0 SANTOFRANCI INPUT, chooseInput = 1 BOTTONI, chooseInput = 2 SWIPE
+        ChooseInput()
         
         //ScoreLabel
         scoreLabel.position.x = frame.midX
@@ -382,26 +403,19 @@ class GameScene: SKScene
        
         dollySprite.zPosition = scoreLabel.zPosition - 1
         dollySprite.size = CGSize(width: 40, height: 40)
+        dollySprite.name = "dollySprite"
         addChild(dollySprite)
         
      
         
         // Blood
         addChild(explosionBloodSprite)
-        
-        // INPUT CON I BOTTONI
-        //CreateInput()
-        
-        // SWIPE CHE SCORRE TIPO PACMAN FIN QUANDO NON TROVA OSTACOLO
-        //addSwipeGesture()
-        
-        // FRANCI E SANTO MOVMENT
-        
-        createPipistrelloButton()
-        addSantoFranciSwipeButton()
+
+// -------------- INPUT TYPE --------------
+
+
   
         self.view?.isMultipleTouchEnabled = false
-      
         //MUSIC
         addChild(backgroundMusic)
         backgroundMusic.run(SKAction.changeVolume(to: Float(0.1), duration: 0))
@@ -415,6 +429,9 @@ class GameScene: SKScene
     {
         
         //addSwipeGesture()
+//        backgroundScene.position = player.position
+//        backgroundScene.zPosition = player.zPosition - 1000
+//        backgroundScene.name = "0"
         
         cam.position.x = player.position.x
         cam.position.y = player.position.y
@@ -460,7 +477,7 @@ class GameScene: SKScene
         touchRight?.position.y = cam.position.y - 124
         
         pipistrello?.position.x = cam.position.x
-        pipistrello?.position.y = cam.position.y - 130
+        pipistrello?.position.y = cam.position.y - 120
     }
 }
 
@@ -498,8 +515,6 @@ extension GameScene
                 if(arrayPoint[i][j] == 0)
                 {
                     blood = SKSpriteNode(imageNamed: "blood")
-//                    blood.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count)/2,
-//                                        height: self.size.width/CGFloat(arrayPoint[0].count)/2)
                     blood.size = CGSize(width: 11, height: 11)
                     blood.zRotation = 0.19
                     blood.name = "redBloodCell"
@@ -510,7 +525,6 @@ extension GameScene
                     totalArrayTexture.append(ground)
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
                                          height: self.size.width/CGFloat(arrayPoint[0].count))
-                    
                     ground.zPosition = 1
                     ground.addChild(blood)
                     arrayBlood.append(blood)
@@ -524,14 +538,7 @@ extension GameScene
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
                                          height: self.size.width/CGFloat(arrayPoint[0].count))
                 }
-//                else if(arrayPoint[i][j] == 3)
-//                {
-//                    ground.name = "1"
-//                    var texturToShow: String = WallWindows.randomElement()!
-//                    ground.texture = SKTexture(imageNamed: texturToShow)
-//                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-//                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-//                }
+                
                 ground.position = CGPoint(x: x, y: y)
                 x += self.size.width/CGFloat(arrayPoint[0].count)
                 addChild(ground)
@@ -700,6 +707,13 @@ extension GameScene
             MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
         
+        else if(atPoint(location).name == "dollySprite")
+        {
+            let transition = SKTransition.fade(with: .black, duration: 0.5)
+            let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
+            self.view?.presentScene(returnToMenuScene, transition: transition)
+        }
+        
 // ----------------------------------------------------- PIPISTRELLO BUTTON -------------------------------
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "up")
@@ -737,6 +751,7 @@ extension GameScene
             pipistrello?.alpha = 1
             MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
+        
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -791,6 +806,7 @@ extension GameScene
             touched = true
             newDirection = "right"
             MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            StartIdleAnimation()
           }
 
         @objc func swipedUp(sender: UISwipeGestureRecognizer) {
@@ -815,6 +831,7 @@ extension GameScene
             touched = true
             newDirection = "left"
             MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            StartIdleAnimation()
           }
     
     
@@ -983,6 +1000,39 @@ extension GameScene
     }
     
     
+    func ChooseInput()
+    {
+        if chooseInput == 0
+        {
+            // -------------- FRANCI E SANTO MOVMENT --------------
+            
+            createPipistrelloButton()
+            addSantoFranciSwipeButton()
+        }
+        else if chooseInput == 1
+        {
+            // -------------- BOTTONI --------------
+                    
+            CreateInput()
+        }
+        else if chooseInput == 2
+        {
+            // -------------- SWIPE TIPO PACMAN FINO AD OSTACOLI E SI FERMA CON UN CLICK --------------
+            
+            addSwipeGesture()
+        }
+        
+        
+                
+        
+
+                
+                
+        
+                
+               
+    }
+    
     func CreateInput()
     {
         touchUp = SKSpriteNode(imageNamed: "Arrow")
@@ -1021,6 +1071,8 @@ extension GameScene
         pipistrello?.name = "pipistrello"
         pipistrello?.alpha = 0.7
         pipistrello?.zPosition = 100
+        let pipistrelloAnimation = SKAction.animate(with: pipistrelloMove, timePerFrame: 0.1)
+        pipistrello.run(SKAction.repeatForever(pipistrelloAnimation))
         addChild(pipistrello!)
     }
     

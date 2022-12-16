@@ -35,6 +35,7 @@ class HistoryScene: SKScene
             let nodesArray = self.nodes(at: location)
             if(nodesArray.first?.name == "returnToMenu")
             {
+                self.mainMenuNode.alpha = 0.3
                 let transition = SKTransition.fade(with: .black, duration: 0.5)
                 let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
                 self.view?.presentScene(returnToMenuScene, transition: transition)

@@ -10,6 +10,7 @@ import UIKit
 
 
 var vibrationFlag = false
+var chooseInput = 0
 
 func UpdateHightScore(with score: Int)
 {
