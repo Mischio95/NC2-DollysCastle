@@ -464,20 +464,20 @@ class GameScene: SKScene
         dollySprite.position.y = totalPlayerHeart[0].position.y
         
         touchUp?.position.x = cam.position.x + 0.1
-        touchUp?.position.y = cam.position.y - 100
+        touchUp?.position.y = cam.position.y - 90
     
         touchDown?.position.x = cam.position.x + 0.1
-        touchDown?.position.y = cam.position.y - 150
+        touchDown?.position.y = cam.position.y - 140
         
        
         touchLeft?.position.x = cam.position.x - 30
-        touchLeft?.position.y = cam.position.y - 124
+        touchLeft?.position.y = cam.position.y - 114
 
         touchRight?.position.x = cam.position.x + 30
-        touchRight?.position.y = cam.position.y - 124
+        touchRight?.position.y = cam.position.y - 114
         
         pipistrello?.position.x = cam.position.x
-        pipistrello?.position.y = cam.position.y - 120
+        pipistrello?.position.y = cam.position.y - 110
     }
 }
 
@@ -1036,28 +1036,28 @@ extension GameScene
     func CreateInput()
     {
         touchUp = SKSpriteNode(imageNamed: "Arrow")
-        touchUp?.size = CGSize(width: 40, height: 40)
+        touchUp?.size = CGSize(width: 35, height: 35)
         touchUp?.name = "up"
         touchUp?.zPosition = 100
         addChild(touchUp!)
         
         
         touchDown = SKSpriteNode(imageNamed: "Arrow")
-        touchDown?.size = CGSize(width: 40, height: 40)
+        touchDown?.size = CGSize(width: 35, height: 35)
         touchDown?.name = "down"
         touchDown?.zRotation = -3.14159
         touchDown?.zPosition = 100
         addChild(touchDown!)
         
         touchLeft = SKSpriteNode(imageNamed: "Arrow")
-        touchLeft?.size = CGSize(width: 40, height: 40)
+        touchLeft?.size = CGSize(width: 35, height: 35)
         touchLeft?.name = "left"
         touchLeft?.zRotation = 1.5708
         touchLeft?.zPosition = 100
         addChild(touchLeft!)
 
         touchRight = SKSpriteNode(imageNamed: "Arrow")
-        touchRight?.size = CGSize(width: 40, height: 40)
+        touchRight?.size = CGSize(width: 35, height: 35)
         touchRight?.name = "right"
         touchRight?.zRotation = -1.5708
         touchRight?.zPosition = 100
