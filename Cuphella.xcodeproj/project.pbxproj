@@ -25,6 +25,8 @@
 		A785F4BB294A08280006C815 /* HistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A785F4BA294A08280006C815 /* HistoryScene.swift */; };
 		A7A1E4692947B10D005369DB /* game-over-8bit.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7A1E4682947B10D005369DB /* game-over-8bit.wav */; };
 		A7A5C6B8294BD71800F8C660 /* ATMO.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7A5C6B7294BD71800F8C660 /* ATMO.wav */; };
+		A7A5C6BB294DDA6E00F8C660 /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A5C6BA294DDA6E00F8C660 /* SettingScene.swift */; };
+		A7A5C6BD294DDA7E00F8C660 /* SettingScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A7A5C6BC294DDA7E00F8C660 /* SettingScene.sks */; };
 		A7D29A46294239EA00140698 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D29A45294239EA00140698 /* EndGameScene.swift */; };
 		A7D29A48294255A500140698 /* SoundDesignGame.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7D29A47294255A400140698 /* SoundDesignGame.mp3 */; };
 		A7D29A4D29434D5800140698 /* ScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D29A4C29434D5800140698 /* ScoreScene.swift */; };
@@ -54,6 +56,8 @@
 		A785F4BA294A08280006C815 /* HistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScene.swift; sourceTree = "<group>"; };
 		A7A1E4682947B10D005369DB /* game-over-8bit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "game-over-8bit.wav"; sourceTree = "<group>"; };
 		A7A5C6B7294BD71800F8C660 /* ATMO.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ATMO.wav; sourceTree = "<group>"; };
+		A7A5C6BA294DDA6E00F8C660 /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
+		A7A5C6BC294DDA7E00F8C660 /* SettingScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingScene.sks; sourceTree = "<group>"; };
 		A7D29A45294239EA00140698 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
 		A7D29A47294255A400140698 /* SoundDesignGame.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SoundDesignGame.mp3; sourceTree = "<group>"; };
 		A7D29A4C29434D5800140698 /* ScoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreScene.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 				A7D29A4E29434E2600140698 /* Utilities.swift */,
 				838C604F293FC93A00D87B32 /* Actions.sks */,
 				A7D435A8294653CF00A8B2B0 /* Info.plist */,
+				A7A5C6B9294DDA5100F8C660 /* Setting */,
 				A7D4359E2946519400A8B2B0 /* Menu */,
 				A7D435AE29465C7300A8B2B0 /* EndGame */,
 				A785F4B9294A080C0006C815 /* History */,
@@ -122,6 +127,15 @@
 				A785F4BA294A08280006C815 /* HistoryScene.swift */,
 			);
 			path = History;
+			sourceTree = "<group>";
+		};
+		A7A5C6B9294DDA5100F8C660 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				A7A5C6BA294DDA6E00F8C660 /* SettingScene.swift */,
+				A7A5C6BC294DDA7E00F8C660 /* SettingScene.sks */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		A7D29A49294255E500140698 /* Music */ = {
@@ -240,6 +254,7 @@
 				838C6059293FC93B00D87B32 /* Assets.xcassets in Resources */,
 				A7A5C6B8294BD71800F8C660 /* ATMO.wav in Resources */,
 				838C605C293FC93B00D87B32 /* LaunchScreen.storyboard in Resources */,
+				A7A5C6BD294DDA7E00F8C660 /* SettingScene.sks in Resources */,
 				838C6050293FC93A00D87B32 /* Actions.sks in Resources */,
 				A749C081294510A600F0D5B5 /* main.wav in Resources */,
 				A7D435A52946526100A8B2B0 /* ScoreScene.sks in Resources */,
@@ -266,6 +281,7 @@
 				A785F4BB294A08280006C815 /* HistoryScene.swift in Sources */,
 				838C6054293FC93A00D87B32 /* GameViewController.swift in Sources */,
 				838C604C293FC93A00D87B32 /* AppDelegate.swift in Sources */,
+				A7A5C6BB294DDA6E00F8C660 /* SettingScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +436,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,7 +466,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

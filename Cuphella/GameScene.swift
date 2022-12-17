@@ -39,6 +39,8 @@ import Foundation
 class GameScene: SKScene
 {
     
+    private var timeUpdate : Double = 0
+    
     var pipistrello: SKSpriteNode!
     
     var backgroundScene: SKSpriteNode!
@@ -50,6 +52,8 @@ class GameScene: SKScene
     var vectorLight: [SKSpriteNode] = []
     
     var invincible = false
+    
+    
     
     //Various Animation
 
@@ -277,6 +281,9 @@ class GameScene: SKScene
         return[
         dollyDownAtlas.textureNamed("DollyDown1"),
         dollyDownAtlas.textureNamed("DollyDown0"),
+        dollyDownAtlas.textureNamed("DollyDown1"),
+        dollyDownAtlas.textureNamed("DollyDown1"),
+        dollyDownAtlas.textureNamed("DollyDown0"),
         dollyDownAtlas.textureNamed("DollyDown1")]
     }
     
@@ -291,6 +298,9 @@ class GameScene: SKScene
     private var dollyMoveLeft: [SKTexture]
     {
         return[
+            dollyLeftAtlas.textureNamed("DollyLeft1"),
+            dollyLeftAtlas.textureNamed("DollyLeft2"),
+            dollyLeftAtlas.textureNamed("DollyLeft0"),
             dollyLeftAtlas.textureNamed("DollyLeft1"),
             dollyLeftAtlas.textureNamed("DollyLeft2"),
             dollyLeftAtlas.textureNamed("DollyLeft0")]
@@ -417,9 +427,13 @@ class GameScene: SKScene
   
         self.view?.isMultipleTouchEnabled = false
         //MUSIC
-        addChild(backgroundMusic)
-        backgroundMusic.run(SKAction.changeVolume(to: Float(0.1), duration: 0))
-    
+        
+        if chooseSound
+        {
+            addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0.1), duration: 0))
+        }
+        
     }
 
     
@@ -433,6 +447,18 @@ class GameScene: SKScene
 //        backgroundScene.zPosition = player.zPosition - 1000
 //        backgroundScene.name = "0"
         
+//        if chooseInput==0 {
+//            if(timeUpdate == 0){
+//                timeUpdate = currentTime
+//
+//            }
+//            if currentTime - timeUpdate > 1 {
+//                touched = false
+//                timeUpdate=currentTime
+//            }
+//
+//        }
+//
         cam.position.x = player.position.x
         cam.position.y = player.position.y
         
@@ -676,7 +702,10 @@ extension GameScene
         
         if(atPoint(location).name == "left" || atPoint(location).name == "left1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "left")?.alpha = 1
             newDirection = "left"
@@ -684,7 +713,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "up" || atPoint(location).name == "up1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "up")?.alpha = 1
             newDirection = "up"
@@ -692,7 +724,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "down" || atPoint(location).name == "down1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "down")?.alpha = 1
             newDirection = "down"
@@ -700,7 +735,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "right" || atPoint(location).name == "right1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "right")?.alpha = 1
             newDirection = "right"
@@ -710,7 +748,7 @@ extension GameScene
         else if(atPoint(location).name == "dollySprite")
         {
             let transition = SKTransition.fade(with: .black, duration: 0.5)
-            let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
+            let returnToMenuScene = SKScene(fileNamed: "SettingScene") as! SettingScene
             self.view?.presentScene(returnToMenuScene, transition: transition)
         }
         
@@ -718,7 +756,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "up")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "up"
             pipistrello?.alpha = 1
@@ -727,7 +768,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "down")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "down"
             pipistrello?.alpha = 1
@@ -736,7 +780,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "right")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "right"
             pipistrello?.alpha = 1
@@ -745,7 +792,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "left")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "left"
             pipistrello?.alpha = 1
@@ -802,36 +852,41 @@ extension GameScene
         }
 
         @objc func swipedRight(sender: UISwipeGestureRecognizer) {
-
-            touched = true
+            
             newDirection = "right"
-            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             StartIdleAnimation()
+            touched = true
+            print(newDirection)
+            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            
           }
 
         @objc func swipedUp(sender: UISwipeGestureRecognizer) {
-
-            touched = true
             newDirection = "up"
-            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
             StartIdleAnimation()
+            touched = true
+            
+            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
+           
           }
 
-        @objc func swipedDown(sender: UISwipeGestureRecognizer) {
-
-            touched = true
-            newDirection = "down"
-            
-            MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
+    @objc func swipedDown(sender: UISwipeGestureRecognizer) {
+        newDirection = "down"
             StartIdleAnimation()
+            touched = true
+            
+            
+           MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
+            
           }
 
         @objc func swipedLeft(sender: UISwipeGestureRecognizer) {
-
-            touched = true
             newDirection = "left"
-            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             StartIdleAnimation()
+            touched = true
+          
+            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+           
           }
     
     
