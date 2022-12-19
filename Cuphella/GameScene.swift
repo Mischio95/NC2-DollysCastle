@@ -578,7 +578,105 @@ extension GameScene
                 else if(arrayPoint[i][j] == 1)
                 {
                     ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "wallt")
+                    ground.texture = SKTexture(imageNamed: "1")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 3)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "3")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 4)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "4")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 5)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "5")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 6)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "6")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 7)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "7")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 8)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "8")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 9)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "9")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 11)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "11")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 12)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "12")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 13)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "13")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 14)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "14")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 15)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "15")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 16)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "16")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 18)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "18")
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
                                          height: self.size.width/CGFloat(arrayPoint[0].count))
                 }
@@ -601,7 +699,7 @@ extension GameScene
         player.zPosition = 20
         player.size = CGSize(width: 25, height: 25)
         player.name = "Player"
-        player.position = points[481]
+        player.position = points[500]
         addChild(player)
     }
     
