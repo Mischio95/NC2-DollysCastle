@@ -19,7 +19,7 @@ class LoadingScene: SKScene
     override func didMove(to view: SKView)
     {
         dollyAnimation = self.childNode(withName: "dollyAnimation") as? SKSpriteNode
-        animation = SKAction(named: "dollyHistoryAnimation")
+        animation = SKAction(named: "splashScreen")
         dollyAnimation.run(animation)
         
 //        text1Label = SKLabelNode(fontNamed: "PixeloidMono")
