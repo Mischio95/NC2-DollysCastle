@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "backgroundviola.png",
+      "filename" : "dollyLoading4.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "backgroundviola 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "backgroundviola 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

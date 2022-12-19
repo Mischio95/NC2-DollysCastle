@@ -4,7 +4,7 @@
 //
 //  Created by Kiar on 06/12/22.
 //minuto 52 https://www.youtube.com/watch?v=fGJCb_oweG0
-
+// MODIFICA DI DOMENICA 18/12/22 SE MANGI SI RESETTANO LE LUCI
 // TODO: Score
 
 import SpriteKit
@@ -39,6 +39,8 @@ import Foundation
 class GameScene: SKScene
 {
     
+    private var timeUpdate : Double = 0
+    
     var pipistrello: SKSpriteNode!
     
     var backgroundScene: SKSpriteNode!
@@ -50,6 +52,10 @@ class GameScene: SKScene
     var vectorLight: [SKSpriteNode] = []
     
     var invincible = false
+    
+    var count = 0
+    
+    
     
     //Various Animation
 
@@ -289,6 +295,9 @@ class GameScene: SKScene
         return[
         dollyDownAtlas.textureNamed("DollyDown1"),
         dollyDownAtlas.textureNamed("DollyDown0"),
+        dollyDownAtlas.textureNamed("DollyDown1"),
+        dollyDownAtlas.textureNamed("DollyDown1"),
+        dollyDownAtlas.textureNamed("DollyDown0"),
         dollyDownAtlas.textureNamed("DollyDown1")]
     }
     
@@ -303,6 +312,9 @@ class GameScene: SKScene
     private var dollyMoveLeft: [SKTexture]
     {
         return[
+            dollyLeftAtlas.textureNamed("DollyLeft1"),
+            dollyLeftAtlas.textureNamed("DollyLeft2"),
+            dollyLeftAtlas.textureNamed("DollyLeft0"),
             dollyLeftAtlas.textureNamed("DollyLeft1"),
             dollyLeftAtlas.textureNamed("DollyLeft2"),
             dollyLeftAtlas.textureNamed("DollyLeft0")]
@@ -368,10 +380,8 @@ class GameScene: SKScene
         CreateMap()
         CreatePlayer()
         CreateHeart()
-        
-        // choosInput = 0 SANTOFRANCI INPUT, chooseInput = 1 BOTTONI, chooseInput = 2 SWIPE
-        ChooseInput()
-        
+        //addBackground()
+
         //ScoreLabel
         scoreLabel.position.x = frame.midX
         scoreLabel.color = UIColor.black
@@ -393,7 +403,6 @@ class GameScene: SKScene
         addChild(timerNode)
         time = 10 // force didset
         run(SKAction.repeatForever(SKAction.sequence([SKAction.run(countdown),SKAction.wait(forDuration: 1)])))
-        
         
         
         //Life
@@ -423,15 +432,24 @@ class GameScene: SKScene
         // Blood
         addChild(explosionBloodSprite)
 
-// -------------- INPUT TYPE --------------
+        // -------------- INPUT TYPE --------------
 
-
+        // choosInput = 0 SANTOFRANCI INPUT, chooseInput = 1 BOTTONI, chooseInput = 2 SWIPE
+        ChooseInput()
   
         self.view?.isMultipleTouchEnabled = false
         //MUSIC
-        addChild(backgroundMusic)
-        backgroundMusic.run(SKAction.changeVolume(to: Float(0.1), duration: 0))
-    
+        
+        if chooseSound
+        {
+            addChild(backgroundMusic)
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0.1), duration: 0))
+        }
+        else
+        {
+            backgroundMusic.run(SKAction.changeVolume(to: Float(0), duration: 0))
+        }
+        
     }
 
     
@@ -445,10 +463,22 @@ class GameScene: SKScene
 //        backgroundScene.zPosition = player.zPosition - 1000
 //        backgroundScene.name = "0"
         
+//        if chooseInput==0 {
+//            if(timeUpdate == 0){
+//                timeUpdate = currentTime
+//
+//            }
+//            if currentTime - timeUpdate > 1 {
+//                touched = false
+//                timeUpdate=currentTime
+//            }
+//
+//        }
+//
+        
         cam.position.x = player.position.x
         cam.position.y = player.position.y
         
-       
         timerNode.position.x = cam.position.x + 75
         timerNode.position.y = cam.position.y + 170
         
@@ -464,6 +494,9 @@ class GameScene: SKScene
         
         scoreLabel.position.x = cam.position.x + 60
         scoreLabel.position.y = cam.position.y + 130
+        
+        
+        
         
         //
         currentLifeLable.position.x = cam.position.x + 1
@@ -502,7 +535,7 @@ extension GameScene
        
         var x: CGFloat = self.size.width/2 + self.size.width/CGFloat(arrayPoint[0].count)/2
         //var y: CGFloat = self.size.width/2 - self.size.width/CGFloat(arrayPoint[0].count)/2
-        var y: CGFloat = self.size.width - self.size.width/CGFloat(arrayPoint[0].count) - 300
+        var y: CGFloat = self.size.width - self.size.width/CGFloat(arrayPoint[0].count)
         
         for i in 0...arrayPoint.count-1
         {
@@ -521,8 +554,7 @@ extension GameScene
             for j in 0...arrayPoint[0].count-1
             {
                 ground = SKSpriteNode()
-                ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                     height: self.size.width/CGFloat(arrayPoint[0].count))
+                ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),height: self.size.width/CGFloat(arrayPoint[0].count))
                 
                 if(arrayPoint[i][j] == 0)
                 {
@@ -532,7 +564,7 @@ extension GameScene
                     blood.name = "redBloodCell"
                     blood.zPosition = 3
                     ground.name = "0"
-                    ground.texture = SKTexture(imageNamed: "0")
+                    ground.texture = SKTexture(imageNamed: "DarkBrick")
                     arrayTexture.append(ground)
                     totalArrayTexture.append(ground)
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
@@ -546,105 +578,7 @@ extension GameScene
                 else if(arrayPoint[i][j] == 1)
                 {
                     ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "1")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 3)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "3")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 4)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "4")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 5)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "5")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 6)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "6")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 7)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "7")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 8)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "8")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 9)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "9")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 11)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "11")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 12)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "12")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 13)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "13")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 14)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "14")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 15)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "15")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 16)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "16")
-                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
-                                         height: self.size.width/CGFloat(arrayPoint[0].count))
-                }
-                else if(arrayPoint[i][j] == 18)
-                {
-                    ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "18")
+                    ground.texture = SKTexture(imageNamed: "wallt")
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
                                          height: self.size.width/CGFloat(arrayPoint[0].count))
                 }
@@ -676,11 +610,10 @@ extension GameScene
         if(touched)
         {
             let next = nodes(at: CGPoint(x: player.position.x + x, y: player.position.y + y)).last
-            if(next?.name == "0" || next?.name == "2" || next?.name == "ciccio")
+            if(next?.name == "0" || next?.name == "2")
             {
                 if(next?.name == "2")
                 {
-                    
                     if !invincible
                     {
                         let burnLight = SKAction.playSoundFileNamed("burn.wav", waitForCompletion: false)
@@ -688,6 +621,7 @@ extension GameScene
                         PlayerHit()
                         UpdateLife()
                     }
+                    
                 }
 
                 if(next?.childNode(withName: "redBloodCell") != nil)
@@ -699,6 +633,8 @@ extension GameScene
                         AddLife()
                     }
                     UpdateScore()
+                   
+                    
                 }
                 
                 if(next?.childNode(withName: "human") != nil)
@@ -724,24 +660,25 @@ extension GameScene
                     next?.childNode(withName: "human")?.removeFromParent()
                         
                     AddLife()
+                   
                 }
         
                 player.position = next!.position
                 StarRunningAnimation()
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(130))
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(140))
                 {
-                    [self] in
-                    MovePlayer(x: x, y: y)
+//                    [self] in
+//                    MovePlayer(x: x, y: y)
+                    self.StartIdleAnimation()
                 }
             }
-            
             else if (next?.name == "1")
             {
                 StartIdleAnimation()
             }
         }
-        
     }
     
     func PlayerHit()
@@ -786,7 +723,10 @@ extension GameScene
         
         if(atPoint(location).name == "left" || atPoint(location).name == "left1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "left")?.alpha = 1
             newDirection = "left"
@@ -794,7 +734,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "up" || atPoint(location).name == "up1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "up")?.alpha = 1
             newDirection = "up"
@@ -802,7 +745,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "down" || atPoint(location).name == "down1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "down")?.alpha = 1
             newDirection = "down"
@@ -810,7 +756,10 @@ extension GameScene
         }
         else if(atPoint(location).name == "right" || atPoint(location).name == "right1")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             childNode(withName: "right")?.alpha = 1
             newDirection = "right"
@@ -819,16 +768,27 @@ extension GameScene
         
         else if(atPoint(location).name == "dollySprite")
         {
-            let transition = SKTransition.fade(with: .black, duration: 0.5)
-            let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
-            self.view?.presentScene(returnToMenuScene, transition: transition)
+//            let transition = SKTransition.fade(with: .black, duration: 0.5)
+//            let returnToMenuScene = SKScene(fileNamed: "SettingScene") as! SettingScene
+//            self.view?.presentScene(returnToMenuScene, transition: transition)
+            if(scene?.view?.isPaused == true)
+            {
+                scene?.view?.isPaused = false
+            }
+            else
+            {
+                scene?.view?.isPaused = true
+            }
         }
         
 // ----------------------------------------------------- PIPISTRELLO BUTTON -------------------------------
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "up")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "up"
             pipistrello?.alpha = 1
@@ -837,7 +797,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "down")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "down"
             pipistrello?.alpha = 1
@@ -846,7 +809,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "right")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "right"
             pipistrello?.alpha = 1
@@ -855,7 +821,10 @@ extension GameScene
         
         else if(atPoint(location).name == "pipistrello" && newDirection == "left")
         {
-            selectionFeedbackGenerator.selectionChanged()
+            if chooseVibration
+            {
+                selectionFeedbackGenerator.selectionChanged()
+            }
             touched = true
             newDirection = "left"
             pipistrello?.alpha = 1
@@ -912,10 +881,11 @@ extension GameScene
         }
 
         @objc func swipedRight(sender: UISwipeGestureRecognizer) {
-
-            touched = false
+            //count += 1
             newDirection = "right"
             StartIdleAnimation()
+            touched = true
+            print(newDirection)
             
             MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             
@@ -925,8 +895,9 @@ extension GameScene
 
             touched = false
             newDirection = "up"
+            //count += 1
             StartIdleAnimation()
-           
+            touched = true
             MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
             
           }
@@ -936,9 +907,11 @@ extension GameScene
             touched = false
             newDirection = "down"
             StartIdleAnimation()
+            touched = true
+            //count += 1
             
             MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
-            
+               
           }
 
         @objc func swipedLeft(sender: UISwipeGestureRecognizer) {
@@ -946,9 +919,13 @@ extension GameScene
             touched = false
             StartIdleAnimation()
             newDirection = "left"
+            StartIdleAnimation()
+            touched = true
+            //count += 1
             
             MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
-            
+
+           
           }
     
     
@@ -981,8 +958,8 @@ extension GameScene
             view?.addGestureRecognizer(swipeLeft)
     }
     
-    @objc func swipedRightSantoFranci(sender: UISwipeGestureRecognizer) {
-        
+     @objc func swipedRightSantoFranci(sender: UISwipeGestureRecognizer)
+     {
         newDirection = "right"
         //pipistrello.zRotation = -1.5708
         touched = false
@@ -1028,7 +1005,7 @@ extension GameScene
             NewRound()
         }
         
-        if(time % 2 == 0)
+        if(time % 3 == 0)
         {
             for i in 0...cellToOccupy
             {
@@ -1138,16 +1115,6 @@ extension GameScene
             
             addSwipeGesture()
         }
-        
-        
-                
-        
-
-                
-                
-        
-                
-               
     }
     
     func CreateInput()
@@ -1240,13 +1207,13 @@ extension GameScene
     
     func addBackground()
     {
-        DispatchQueue.main.async
-        {
-            self.background.zPosition = 1
-            self.background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-            self.background.size = CGSize(width: self.size.width, height: self.size.height)
-            self.addChild(self.background)
-        }
+            
+            background.zPosition = -100
+            background.position = CGPoint(x: size.width , y: size.height)
+            background.size = CGSize(width: size.width, height: size.height)
+            background.name = "0"
+            addChild(background)
+           
     }
     
     func CreateHeart()
@@ -1377,7 +1344,5 @@ extension GameScene
         human.run(SKAction.repeatForever(humanAnimation))
         totalArrayTexture[randomPos].addChild(human)
     }
-    
-    
 }
 

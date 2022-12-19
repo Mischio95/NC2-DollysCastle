@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "VIBRATION BUTTON.png",
+      "filename" : "VIBRATIONBUTTON.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "VIBRATION BUTTON 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "VIBRATION BUTTON 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

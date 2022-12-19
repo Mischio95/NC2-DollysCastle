@@ -16,13 +16,13 @@ class MenuScene: SKScene
     var allScoreButtonNode:SKSpriteNode!
     var dollyHistoryNode:SKSpriteNode!
     var inputButton:SKSpriteNode!
-    
+    var settingButton: SKSpriteNode!
     var vibrationNode:SKSpriteNode!
     var textLabel :SKLabelNode!
     var backgroundGif: SKSpriteNode!
     var animation: SKAction!
     var touchButton = false
-    var countTouch = 1
+    
     
     override func didMove(to view: SKView)
     {
@@ -31,10 +31,8 @@ class MenuScene: SKScene
         dollyHistoryNode = self.childNode(withName: "historyDollyButton") as? SKSpriteNode
         //        vibrationNode = self.childNode(withName: "vibrationButton") as? SKSpriteNode
         //
-        textLabel = self.childNode(withName: "textLabel") as? SKLabelNode
-        textLabel.name = "textLabelLabel"
-        inputButton = self.childNode(withName: "inputButton") as? SKSpriteNode
-        textLabel.color = UIColor.white
+        settingButton = self.childNode(withName: "settingButton") as? SKSpriteNode
+        
         newGameButtonNode.alpha = 1
         allScoreButtonNode.alpha = 1
         dollyHistoryNode.alpha = 1
@@ -81,46 +79,52 @@ class MenuScene: SKScene
                 let historyScene = SKScene(fileNamed: "HistoryScene") as! HistoryScene
                 self.view?.presentScene(historyScene, transition: transitionHistory)
             }
-            
-            else if (nodesArray.first?.name == "inputButton" || nodesArray.first?.name == "textLabelLabel")
+            else if (nodesArray.first?.name == "settingButton")
             {
-                textLabel.color = UIColor.white
-                self.inputButton.alpha = 0.3
-                self.textLabel.alpha = 0.3
-                switch countTouch
-                {
-                case 1:
-                    textLabel.text = "PAD"
-                    chooseInput = 1
-                    textLabel.color = UIColor.white
-                    break
-                case 2:
-                    textLabel.text = "SWIPE"
-                   
-                    chooseInput = 2
-                    textLabel.color = UIColor.white
-                    
-                    break
-                default:
-                    textLabel.text = "BUTTON"
-                    
-                    countTouch = 0
-                    chooseInput = 0
-                    textLabel.color = UIColor.white
-                    break
-                }
+                settingButton.alpha = 0.3
+                let transitionHistory = SKTransition.fade(with: .black, duration: 0.5)
+                let historyScene = SKScene(fileNamed: "SettingScene") as! SettingScene
+                self.view?.presentScene(historyScene, transition: transitionHistory)
             }
+//            else if (nodesArray.first?.name == "inputButton" || nodesArray.first?.name == "textLabelLabel")
+//            {
+//                textLabel.color = UIColor.white
+//                self.inputButton.alpha = 0.3
+//                self.textLabel.alpha = 0.3
+//                switch countTouch
+//                {
+//                case 1:
+//                    textLabel.text = "PAD"
+//                    chooseInput = 1
+//                    textLabel.color = UIColor.white
+//                    break
+//                case 2:
+//                    textLabel.text = "SWIPE"
+//
+//                    chooseInput = 2
+//                    textLabel.color = UIColor.white
+//
+//                    break
+//                default:
+//                    textLabel.text = "BUTTON"
+//
+//                    countTouch = 0
+//                    chooseInput = 0
+//                    textLabel.color = UIColor.white
+//                    break
+//                }
+//            }
         }
     }
     
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        self.inputButton.alpha = 1
-        self.textLabel.alpha = 1
-        self.countTouch += 1
-        print(countTouch)
-        textLabel.color = UIColor.white
-    }
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//
+//        self.inputButton.alpha = 1
+//        self.textLabel.alpha = 1
+//        self.countTouch += 1
+//        print(countTouch)
+//        textLabel.color = UIColor.white
+//    }
 }
 
