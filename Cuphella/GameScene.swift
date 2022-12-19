@@ -142,33 +142,45 @@ class GameScene: SKScene
     var arrayBlood: [SKSpriteNode] = []//Array of blood that can be picked
     var totalArrayBlood: [SKSpriteNode] = []//All bloods on the map
     
-    var arrayPoint: [[Int]] = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                              [9,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
-                              [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                              [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                              [1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,0,1],
-                              [1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1],
-                              [1,0,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,0,1],
-                              [1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1],
-                              [1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,0,1],
-                              [1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1],
-                              [1,0,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,1,1],
-                              [1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,0,0,1],
-                              [1,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,1,1],
-                              [1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1],
-                              [1,0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,0,1],
-                              [1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1],
-                              [1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-                              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                              [1,0,1,0,1,0,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1],
-                              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                              [1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,1],
-                              [1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
-                              [1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1],
-                              [1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1],
-                              [1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,9],
-                              [7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+    var arrayPoint: [[Int]] = [ [1,3,3,3,3,3,3,8,3,3,3,3,3,3,3,3,3,8,3,3,3,3,3,3,3,4],
+                                [5,18,18,18,18,18,18,5,18,18,18,18,18,18,18,18,18,5,18,18,18,18,18,18,18,5],
+                                [5,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5],
+                                [5,0,0,12,0,1,3,15,0,13,3,3,3,3,3,4,0,14,3,0,3,4,0,12,0,5],
+                                [14,3,3,6,0,11,18,5,0,18,18,18,18,18,18,5,0,5,18,0,18,5,0,5,0,5],
+                                [5,18,18,18,0,18,0,5,0,0,0,0,0,0,0,5,0,5,0,0,0,5,0,11,0,5],
+                                [5,0,0,0,0,0,0,7,9,0,13,3,3,3,3,6,0,7,4,0,1,6,0,18,0,5],
+                                [5,0,13,3,3,4,0,18,18,0,18,18,18,18,18,18,0,18,11,0,11,18,0,0,0,5],
+                                [5,0,18,18,18,5,0,0,0,0,0,0,0,0,0,0,0,0,18,0,18,0,0,13,3,5],
+                                [100,0,0,0,0,7,3,3,3,9,0,1,3,9,0,12,0,0,0,0,0,0,0,18,18,5],
+                                [4,0,12,0,0,18,18,18,18,18,0,5,18,18,0,5,0,0,12,0,12,0,0,0,0,5],
+                                [5,0,5,0,0,0,0,0,0,0,0,5,0,0,0,5,0,1,6,0,7,8,3,9,0,5],
+                                [5,0,5,0,13,3,3,3,3,4,0,7,3,4,0,5,0,5,18,0,18,5,18,18,0,5],
+                                [14,3,15,0,18,18,18,18,18,5,0,18,18,5,0,5,0,5,0,0,0,5,0,0,0,5],
+                                [5,18,5,0,0,0,0,0,0,5,0,0,0,11,0,5,0,7,9,0,13,6,0,12,0,5],
+                                [5,0,7,3,3,4,0,12,0,5,0,12,0,18,0,5,0,18,18,0,18,18,0,5,0,5],
+                                [5,0,18,18,18,5,0,5,0,11,0,11,0,0,0,5,0,0,0,0,0,0,0,5,0,5],
+                                [5,0,0,0,0,14,3,15,0,18,0,18,0,1,3,6,0,1,3,3,3,3,3,6,0,5],
+                                [5,0,13,3,3,6,18,5,0,0,0,0,0,5,18,18,0,5,18,18,18,18,18,18,0,5],
+                                [5,0,18,18,18,18,0,5,0,13,4,0,13,6,0,0,0,11,0,0,0,0,0,0,0,5],
+                                [5,0,0,0,0,0,0,11,0,18,5,0,18,18,0,12,0,18,0,1,3,4,0,13,3,15],
+                                [5,0,12,0,1,9,0,18,0,0,5,0,0,0,0,5,0,0,0,5,18,5,0,18,18,5],
+                                [5,0,5,0,5,18,0,0,0,0,5,0,13,4,0,11,0,0,0,5,0,5,0,0,0,5],
+                                [5,0,5,0,5,0,0,1,3,3,6,0,18,5,0,18,0,13,3,6,0,7,3,9,0,5],
+                                [14,3,6,0,11,0,1,6,18,18,18,0,0,11,0,0,0,18,18,18,0,18,18,18,0,5],
+                                [5,18,18,0,18,0,5,18,0,0,0,0,0,18,0,12,0,0,0,0,0,0,0,0,0,5],
+                                [5,0,0,0,0,0,5,0,0,13,3,9,0,0,0,7,3,3,3,9,0,13,8,9,0,5],
+                                [5,0,1,3,9,0,11,0,0,18,18,18,0,0,0,18,18,18,18,18,0,18,5,18,0,5],
+                                [5,0,5,18,18,0,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,5],
+                                [14,3,6,0,0,0,0,0,1,3,9,0,1,3,3,3,3,4,0,13,0,3,6,0,0,5],
+                                [5,18,18,0,1,3,3,3,6,18,18,0,5,18,18,18,18,5,0,18,18,18,18,0,0,5],
+                                [5,0,0,0,11,18,18,18,18,0,0,0,5,0,0,0,0,5,0,0,0,0,0,0,0,5],
+                                [5,0,12,0,18,0,0,0,0,0,12,0,11,0,0,0,0,5,0,13,3,3,3,9,0,5],
+                                [5,0,5,0,0,0,0,12,0,0,5,0,18,0,0,0,0,5,0,18,18,18,18,18,0,5],
+                                [5,0,7,3,3,4,0,14,3,3,6,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5],
+                                [5,0,18,18,18,11,0,11,18,18,18,0,1,3,3,9,0,7,9,0,13,3,3,4,0,5],
+                                [5,0,0,0,0,18,0,18,0,0,0,0,5,18,18,18,0,18,18,0,18,18,18,5,0,5],
+                                [5,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,5,0,5],
+                                [7,3,3,3,3,3,3,3,3,3,3,3,16,3,3,3,3,3,3,3,3,3,3,6,100,11]]
     
     //HUD
     var currentLifeLable = SKLabelNode(fontNamed: "PixeloidMono")
@@ -520,7 +532,7 @@ extension GameScene
                     blood.name = "redBloodCell"
                     blood.zPosition = 3
                     ground.name = "0"
-                    ground.texture = SKTexture(imageNamed: "DarkBrick")
+                    ground.texture = SKTexture(imageNamed: "0")
                     arrayTexture.append(ground)
                     totalArrayTexture.append(ground)
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
@@ -534,7 +546,105 @@ extension GameScene
                 else if(arrayPoint[i][j] == 1)
                 {
                     ground.name = "1"
-                    ground.texture = SKTexture(imageNamed: "wallt")
+                    ground.texture = SKTexture(imageNamed: "1")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 3)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "3")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 4)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "4")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 5)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "5")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 6)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "6")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 7)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "7")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 8)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "8")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 9)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "9")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 11)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "11")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 12)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "12")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 13)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "13")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 14)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "14")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 15)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "15")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 16)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "16")
+                    ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
+                                         height: self.size.width/CGFloat(arrayPoint[0].count))
+                }
+                else if(arrayPoint[i][j] == 18)
+                {
+                    ground.name = "1"
+                    ground.texture = SKTexture(imageNamed: "18")
                     ground.size = CGSize(width: self.size.width/CGFloat(arrayPoint[0].count),
                                          height: self.size.width/CGFloat(arrayPoint[0].count))
                 }
@@ -803,35 +913,42 @@ extension GameScene
 
         @objc func swipedRight(sender: UISwipeGestureRecognizer) {
 
-            touched = true
+            touched = false
             newDirection = "right"
-            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             StartIdleAnimation()
+            
+            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            
           }
 
         @objc func swipedUp(sender: UISwipeGestureRecognizer) {
 
-            touched = true
+            touched = false
             newDirection = "up"
-            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
             StartIdleAnimation()
+           
+            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
+            
           }
 
         @objc func swipedDown(sender: UISwipeGestureRecognizer) {
 
-            touched = true
+            touched = false
             newDirection = "down"
+            StartIdleAnimation()
             
             MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
-            StartIdleAnimation()
+            
           }
 
         @objc func swipedLeft(sender: UISwipeGestureRecognizer) {
 
-            touched = true
-            newDirection = "left"
-            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            touched = false
             StartIdleAnimation()
+            newDirection = "left"
+            
+            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
+            
           }
     
     
