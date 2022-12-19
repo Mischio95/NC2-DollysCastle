@@ -30,8 +30,8 @@
             filePath = "Cuphella/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "856"
-            endingLineNumber = "856"
+            startingLineNumber = "880"
+            endingLineNumber = "880"
             landmarkName = "swipedRight(sender:)"
             landmarkType = "7">
          </BreakpointContent>

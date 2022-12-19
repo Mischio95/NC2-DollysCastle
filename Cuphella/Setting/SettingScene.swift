@@ -7,11 +7,13 @@
 
 import Foundation
 import SpriteKit
+import UIKit
 
 class SettingScene: SKScene
 {
     
-    
+    let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+
     var countTouch = 1
     var touchButton = false
     var touchSound = false
@@ -30,6 +32,7 @@ class SettingScene: SKScene
     var textInfoInputLabelSecondLine: SKLabelNode!
     var dollyAnimationSprite:SKSpriteNode!
     var animation:SKAction!
+    let backgroundSound = SKAudioNode(fileNamed: "ATMO.wav")
     override func didMove(to view: SKView) {
         
         //Input
@@ -55,11 +58,22 @@ class SettingScene: SKScene
         animation = SKAction(named: "dollyFaceAnimation")
         dollyAnimationSprite = self.childNode(withName: "dollyAnimation") as? SKSpriteNode
         dollyAnimationSprite.run(animation)
+        
+
+        if chooseSound
+        {
+            addChild(backgroundSound)
+            backgroundSound.run(SKAction.changeVolume(to: Float(1), duration: 0))
+        }
+        else
+        {
+            backgroundSound.run(SKAction.changeVolume(to: Float(0), duration: 0))
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        touchButton = true
+       
         
         if let location = touch?.location (in: self)
         {
@@ -67,6 +81,11 @@ class SettingScene: SKScene
             
             if (nodesArray.first?.name == "inputButton" || nodesArray.first?.name == "textLabelLabel")
             {
+                touchButton = true
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
                 textLabel.color = UIColor.white
                 self.inputButton.alpha = 0.3
                 self.textLabel.alpha = 0.3
@@ -99,20 +118,22 @@ class SettingScene: SKScene
             
             else if (nodesArray.first?.name == "soundButton" || nodesArray.first?.name == "textSoundButton")
             {
-               
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
                 self.soundButtonNode.alpha = 0.3
                 self.textSoundButtonLabel.alpha = 0.3
                 
                 if textSoundButtonLabel.text == "ON"
                 {
-                    print("false")
                     textSoundButtonLabel.text = "OFF"
                     chooseSound = false
+                    print(chooseSound)
                 }
                 
                 else if textSoundButtonLabel.text == "OFF"
                 {
-                    print("true")
                     textSoundButtonLabel.text = "ON"
                     chooseSound = true
                 }
@@ -121,6 +142,11 @@ class SettingScene: SKScene
             
             else if (nodesArray.first?.name == "vibrationButton" || nodesArray.first?.name == "textVibrationButton")
             {
+                
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
                 self.vibrationButtonNode.alpha = 0.3
                 self.textVibrationButtonLabel.alpha = 0.3
                 
@@ -138,6 +164,12 @@ class SettingScene: SKScene
                     chooseVibration = true
                 }
                 
+            }
+            else if(atPoint(location).name == "dollyAnimation")
+            {
+                let transition = SKTransition.fade(with: .black, duration: 0.5)
+                let returnToMenuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
+                self.view?.presentScene(returnToMenuScene, transition: transition)
             }
         }
     }
@@ -158,7 +190,12 @@ class SettingScene: SKScene
         
         self.inputButton.alpha = 1
         self.textLabel.alpha = 1
-        self.countTouch += 1
+       
+        if touchButton
+        {
+            self.countTouch += 1
+            touchButton = false
+        }
         print(countTouch)
         textLabel.color = UIColor.white
     }
