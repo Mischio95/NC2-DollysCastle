@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		832B7C9E295492D10092B7AA /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 832B7C9D295492D10092B7AA /* MyTileSet.sks */; };
 		838C604C293FC93A00D87B32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C604B293FC93A00D87B32 /* AppDelegate.swift */; };
 		838C6050293FC93A00D87B32 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 838C604F293FC93A00D87B32 /* Actions.sks */; };
 		838C6052293FC93A00D87B32 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C6051293FC93A00D87B32 /* GameScene.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		832B7C9D295492D10092B7AA /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		838C6048293FC93A00D87B32 /* Cuphella.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cuphella.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838C604B293FC93A00D87B32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		838C604F293FC93A00D87B32 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				A749C08C29454D2500F0D5B5 /* GameScene.sks */,
 				838C6051293FC93A00D87B32 /* GameScene.swift */,
+				832B7C9D295492D10092B7AA /* MyTileSet.sks */,
 				838C604B293FC93A00D87B32 /* AppDelegate.swift */,
 				838C6053293FC93A00D87B32 /* GameViewController.swift */,
 				A7D29A4E29434E2600140698 /* Utilities.swift */,
@@ -267,6 +270,7 @@
 				A7324CCF2948C506001EC82C /* MysteriousDungeon.mp3 in Resources */,
 				838C6059293FC93B00D87B32 /* Assets.xcassets in Resources */,
 				A7A5C6B8294BD71800F8C660 /* ATMO.wav in Resources */,
+				832B7C9E295492D10092B7AA /* MyTileSet.sks in Resources */,
 				838C605C293FC93B00D87B32 /* LaunchScreen.storyboard in Resources */,
 				A7A5C6BD294DDA7E00F8C660 /* SettingScene.sks in Resources */,
 				A78E8B5D294F4FD5009788F5 /* LoadingScene.sks in Resources */,
@@ -444,7 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U2Y4UHZS79;
+				DEVELOPMENT_TEAM = W76A7456VL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cuphella/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -459,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Test.CuphellaMM.mm;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.CuphellaMM.mmmmm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -474,7 +478,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U2Y4UHZS79;
+				DEVELOPMENT_TEAM = W76A7456VL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cuphella/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -489,7 +493,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Test.CuphellaM.mm;
+				PRODUCT_BUNDLE_IDENTIFIER = Test.CuphellaM.mmmm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

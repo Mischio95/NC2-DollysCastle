@@ -41,6 +41,8 @@ class GameScene: SKScene
     
     private var timeUpdate : Double = 0
     
+    var playerSpeed = CGVector(dx: 0,dy: 0)
+    
     var pipistrello: SKSpriteNode!
     
     var backgroundScene: SKSpriteNode!
@@ -480,6 +482,10 @@ class GameScene: SKScene
 //        }
 //
         
+       
+        
+        print(player.position)
+        
         cam.position.x = player.position.x
         cam.position.y = player.position.y
         
@@ -527,6 +533,7 @@ class GameScene: SKScene
         
         pipistrello?.position.x = cam.position.x
         pipistrello?.position.y = cam.position.y - 110
+        
     }
 }
 
@@ -712,6 +719,7 @@ extension GameScene
         if(touched)
         {
             let next = nodes(at: CGPoint(x: player.position.x + x, y: player.position.y + y)).last
+            
             if(next?.name == "0" || next?.name == "2")
             {
                 if(next?.name == "2")
@@ -765,19 +773,22 @@ extension GameScene
                    
                 }
         
-                player.position = next!.position
+                let move = SKAction.move(by: playerSpeed, duration: 0.3)
+                //player.position = next!.position
+                player?.run(move)
                 StarRunningAnimation()
                 
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(140))
                 {
-//                    [self] in
-//                    MovePlayer(x: x, y: y)
-                    self.StartIdleAnimation()
+                    [self] in
+                    MovePlayer(x: x, y: y)
+//                    self.StartIdleAnimation()
                 }
             }
             else if (next?.name == "1")
             {
+                player?.removeAllActions()
                 StartIdleAnimation()
             }
         }
@@ -822,7 +833,7 @@ extension GameScene
     {
         let touch = touches.first!
         let location = touch.location(in: self)
-        
+                
         if(atPoint(location).name == "left" || atPoint(location).name == "left1")
         {
             if chooseVibration
@@ -832,6 +843,7 @@ extension GameScene
             touched = true
             childNode(withName: "left")?.alpha = 1
             newDirection = "left"
+             playerSpeed = CGVector(dx: -self.size.width/CGFloat(arrayPoint[0].count), dy: 0)
             MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
         else if(atPoint(location).name == "up" || atPoint(location).name == "up1")
@@ -843,6 +855,7 @@ extension GameScene
             touched = true
             childNode(withName: "up")?.alpha = 1
             newDirection = "up"
+            playerSpeed = CGVector(dx: 0, dy: self.size.width/CGFloat(arrayPoint[0].count))
             MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
         }
         else if(atPoint(location).name == "down" || atPoint(location).name == "down1")
@@ -854,6 +867,7 @@ extension GameScene
             touched = true
             childNode(withName: "down")?.alpha = 1
             newDirection = "down"
+            playerSpeed = CGVector(dx: 0, dy: -self.size.width/CGFloat(arrayPoint[0].count))
             MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
         }
         else if(atPoint(location).name == "right" || atPoint(location).name == "right1")
@@ -865,6 +879,7 @@ extension GameScene
             touched = true
             childNode(withName: "right")?.alpha = 1
             newDirection = "right"
+            playerSpeed = CGVector(dx: self.size.width/CGFloat(arrayPoint[0].count), dy: 0)
             MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
         
