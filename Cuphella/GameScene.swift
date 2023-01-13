@@ -36,8 +36,16 @@ import Foundation
  9 = Celle per cambiare mappa
  */
 
-class GameScene: SKScene
+class GameScene: SKScene, SKPhysicsContactDelegate
 {
+    
+    enum PhysicsCategory: UInt32 {
+          case player = 1
+          case pellegrino = 2
+          case wall = 4
+          case jasmine = 8
+          case light = 16
+      }
     
     private var timeUpdate : Double = 0
     
@@ -55,6 +63,7 @@ class GameScene: SKScene
     
     var invincible = false
     
+    var isMoving: Bool = false
     var count = 0
     
     
@@ -455,11 +464,16 @@ class GameScene: SKScene
         {
             backgroundMusic.run(SKAction.changeVolume(to: Float(0), duration: 0))
         }
-        
+        self.physicsWorld.contactDelegate = self
     }
 
     
-    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let otherBody: SKPhysicsBody
+        let playerMask = PhysicsCategory.player.rawValue
+        
+                          
+    }
     
     override func update(_ currentTime: TimeInterval)
     {
@@ -484,7 +498,7 @@ class GameScene: SKScene
         
        
         
-        print(player.position)
+        //print(player.position)
         
         cam.position.x = player.position.x
         cam.position.y = player.position.y
@@ -574,6 +588,8 @@ extension GameScene
                     blood.zRotation = 0.19
                     blood.name = "redBloodCell"
                     blood.zPosition = 3
+                    blood.physicsBody?.categoryBitMask = PhysicsCategory.jasmine.rawValue
+                    blood.physicsBody?.collisionBitMask = 0
                     ground.name = "0"
                     ground.texture = SKTexture(imageNamed: "DarkBrick")
                     arrayTexture.append(ground)
@@ -694,6 +710,12 @@ extension GameScene
                 
                 ground.position = CGPoint(x: x, y: y)
                 x += self.size.width/CGFloat(arrayPoint[0].count)
+                
+                if(ground.name != "0")
+                {
+                    ground.physicsBody?.categoryBitMask =
+                           PhysicsCategory.wall.rawValue
+                }
                 addChild(ground)
                 points.append(ground.position)
             }
@@ -708,9 +730,20 @@ extension GameScene
     {
         player = SKSpriteNode(imageNamed: "DollyDown0")
         player.zPosition = 20
-        player.size = CGSize(width: 25, height: 25)
+        player.size = CGSize(width: 20, height: 20)
         player.name = "Player"
         player.position = points[500]
+        player.physicsBody?.allowsRotation = false
+//        player.physicsBody = SKPhysicsBody(circleOfRadius:
+//           size.width / 2)
+//        player.physicsBody?.affectedByGravity = false
+//        player.physicsBody?.categoryBitMask =  PhysicsCategory.player.rawValue
+//        player.physicsBody?.contactTestBitMask =
+//               PhysicsCategory.pellegrino.rawValue |
+//               PhysicsCategory.wall.rawValue |
+//               PhysicsCategory.jasmine.rawValue
+//           player.physicsBody?.collisionBitMask =
+//               PhysicsCategory.wall.rawValue
         addChild(player)
     }
     
@@ -718,10 +751,19 @@ extension GameScene
     {
         if(touched)
         {
-            let next = nodes(at: CGPoint(x: player.position.x + x, y: player.position.y + y)).last
-            
+            let nextPoint: CGPoint = CGPoint(x: player.position.x + x, y: player.position.y + y)
+            let next = nodes(at: nextPoint).last
+            let move = SKAction.move(to: next!.position, duration: 0.25)
+       
             if(next?.name == "0" || next?.name == "2")
             {
+                if(!isMoving)
+                {
+                    player.run(move)
+                    StarRunningAnimation()
+                    isMoving = true
+                }
+        
                 if(next?.name == "2")
                 {
                     if !invincible
@@ -731,7 +773,6 @@ extension GameScene
                         PlayerHit()
                         UpdateLife()
                     }
-                    
                 }
 
                 if(next?.childNode(withName: "redBloodCell") != nil)
@@ -743,7 +784,6 @@ extension GameScene
                         AddLife()
                     }
                     UpdateScore()
-                   
                     
                 }
                 
@@ -772,25 +812,28 @@ extension GameScene
                     AddLife()
                    
                 }
-        
-                let move = SKAction.move(by: playerSpeed, duration: 0.3)
-                //player.position = next!.position
-                player?.run(move)
-                StarRunningAnimation()
-                
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(140))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.27)
                 {
-                    [self] in
-                    MovePlayer(x: x, y: y)
-//                    self.StartIdleAnimation()
+                    self.player.position = next!.position
+                    self.isMoving = false
                 }
+               
+               
+                
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100))
+//                {
+//                    [self] in
+//                    MovePlayer(x: x, y: y)
+//                    self.StartIdleAnimation()
+//                }
             }
-            else if (next?.name == "1")
-            {
-                player?.removeAllActions()
-                StartIdleAnimation()
-            }
+//            else// if (next?.name == "1")
+//            {
+//               // player?.removeAllActions()
+//                StartIdleAnimation()
+//                isMoving = false
+//            }
         }
     }
     
@@ -833,56 +876,67 @@ extension GameScene
     {
         let touch = touches.first!
         let location = touch.location(in: self)
-                
-        if(atPoint(location).name == "left" || atPoint(location).name == "left1")
+        if(!isMoving)
         {
-            if chooseVibration
+            
+            
+            if(atPoint(location).name == "left" || atPoint(location).name == "left1")
             {
-                selectionFeedbackGenerator.selectionChanged()
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
+                touched = true
+                childNode(withName: "left")?.alpha = 1
+                newDirection = "left"
+                playerSpeed = CGVector(dx: -5, dy: 0)
+                //            let move = SKAction.move(by: playerSpeed, duration: 0.3)
+                //            player.run(move)
+                MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             }
-            touched = true
-            childNode(withName: "left")?.alpha = 1
-            newDirection = "left"
-             playerSpeed = CGVector(dx: -self.size.width/CGFloat(arrayPoint[0].count), dy: 0)
-            MovePlayer(x: -self.size.width/CGFloat(arrayPoint[0].count), y: 0)
-        }
-        else if(atPoint(location).name == "up" || atPoint(location).name == "up1")
-        {
-            if chooseVibration
+            else if(atPoint(location).name == "up" || atPoint(location).name == "up1")
             {
-                selectionFeedbackGenerator.selectionChanged()
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
+                touched = true
+                childNode(withName: "up")?.alpha = 1
+                newDirection = "up"
+                playerSpeed = CGVector(dx: 0, dy: 5)
+                //            let move = SKAction.move(by: playerSpeed, duration: 0.3)
+                //            player.run(move)
+                MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
             }
-            touched = true
-            childNode(withName: "up")?.alpha = 1
-            newDirection = "up"
-            playerSpeed = CGVector(dx: 0, dy: self.size.width/CGFloat(arrayPoint[0].count))
-            MovePlayer(x: 0, y: self.size.width/CGFloat(arrayPoint[0].count))
-        }
-        else if(atPoint(location).name == "down" || atPoint(location).name == "down1")
-        {
-            if chooseVibration
+            else if(atPoint(location).name == "down" || atPoint(location).name == "down1")
             {
-                selectionFeedbackGenerator.selectionChanged()
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
+                touched = true
+                childNode(withName: "down")?.alpha = 1
+                newDirection = "down"
+                playerSpeed = CGVector(dx: 0, dy: -5)
+                //            let move = SKAction.move(by: playerSpeed, duration: 0.3)
+                //            player.run(move)
+                MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
             }
-            touched = true
-            childNode(withName: "down")?.alpha = 1
-            newDirection = "down"
-            playerSpeed = CGVector(dx: 0, dy: -self.size.width/CGFloat(arrayPoint[0].count))
-            MovePlayer(x: 0, y: -self.size.width/CGFloat(arrayPoint[0].count))
-        }
-        else if(atPoint(location).name == "right" || atPoint(location).name == "right1")
-        {
-            if chooseVibration
+            else if(atPoint(location).name == "right" || atPoint(location).name == "right1")
             {
-                selectionFeedbackGenerator.selectionChanged()
+                if chooseVibration
+                {
+                    selectionFeedbackGenerator.selectionChanged()
+                }
+                touched = true
+                childNode(withName: "right")?.alpha = 1
+                newDirection = "right"
+                playerSpeed = CGVector(dx: 5, dy: 0)
+                //            let move = SKAction.move(by: playerSpeed, duration: 0.3)
+                //            player.run(move)
+                MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
             }
-            touched = true
-            childNode(withName: "right")?.alpha = 1
-            newDirection = "right"
-            playerSpeed = CGVector(dx: self.size.width/CGFloat(arrayPoint[0].count), dy: 0)
-            MovePlayer(x: self.size.width/CGFloat(arrayPoint[0].count), y: 0)
         }
-        
         else if(atPoint(location).name == "dollySprite")
         {
 //            let transition = SKTransition.fade(with: .black, duration: 0.5)
